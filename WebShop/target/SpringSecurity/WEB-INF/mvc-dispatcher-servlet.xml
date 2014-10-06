@@ -24,6 +24,9 @@
 	</bean>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-    <mvc:annotation-driven />
-
+       <!-- also add the following beans to get rid of some exceptions -->
+ <bean      class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+ <bean
+class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+ </bean>
 </beans>

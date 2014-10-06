@@ -44,7 +44,7 @@ public class User {
 		this.userRole = userRole;
 	}
 
-	@Id
+	
 	@Column(name = "username", unique = true, nullable = false, length = 45)
 	public String getUsername() {
 		return this.username;

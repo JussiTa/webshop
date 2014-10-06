@@ -16,27 +16,21 @@ import fi.webshop.users.dao.UserDao;
 import fi.webshop.users.model.UserRole;
 
 public class MyUserDetailsService implements UserDetailsService {
+	/*
+	 * This class is for getting and transferring User to spring framework
+	 * userdetailuser
+	 * 
+	 * 
+	 */
 
 	private UserDao userDao;
+	
 
 	@Override
 	public UserDetails loadUserByUsername(final String username)
 			throws UsernameNotFoundException {
 
-		// Programmatic transaction management
-		/*
-		 * return transactionTemplate.execute(new
-		 * TransactionCallback<UserDetails>() {
-		 * 
-		 * public UserDetails doInTransaction(TransactionStatus status) {
-		 * com.mkyong.users.model.User user = userDao.findByUserName(username);
-		 * List<GrantedAuthority> authorities =
-		 * buildUserAuthority(user.getUserRole());
-		 * 
-		 * return buildUserForAuthentication(user, authorities); }
-		 * 
-		 * });
-		 */
+		
 
 		fi.webshop.users.model.User user = userDao.findByUserName(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user
@@ -46,7 +40,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	}
 
-	// Converts com.mkyong.users.model.User user to
+	// Converts fi.webshop.users.model.User user to
 	// org.springframework.security.core.userdetails.User
 	private User buildUserForAuthentication(fi.webshop.users.model.User user,
 			List<GrantedAuthority> authorities) {
@@ -75,6 +69,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
-	}
+	}	
+		
+	
 
 }
