@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.webshop.users.dao.ProductDao;
+import fi.webshop.users.model.ForNullTest;
 import fi.webshop.users.model.Product;
 
 
@@ -15,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private ProductDao productDao;
 
-	public void setProductDAO(ProductDao productDao) {
+	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
 	}
 
@@ -43,6 +44,12 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void removeProduct(int id) {
 		this.productDao.removeProduct(id);
+	}
+
+	@Override
+	public void addForNullTest(ForNullTest t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

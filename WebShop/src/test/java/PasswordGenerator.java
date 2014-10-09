@@ -18,6 +18,15 @@ public class PasswordGenerator {
 		 * 'alex','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS',
 		 * TRUE);
 		 * 
+		 * INSERT INTO users(user_id,username,password,firstname, lastname, address,zipcode,town,username,password,enabled)
+VALUES (100,'jusa','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS'jussi2','iso','hyt',41140,'kuikka', TRUE);
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 * 
 		 * INSERT INTO user_roles (username, ROLE) VALUES ('jussi',
 		 * 'ROLE_USER'); INSERT INTO user_roles (username, ROLE) VALUES

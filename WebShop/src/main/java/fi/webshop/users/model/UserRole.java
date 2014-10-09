@@ -12,12 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.ForeignKey;
+
 @Entity
 @Table(name = "user_roles", uniqueConstraints = @UniqueConstraint(columnNames = { "role", "user_id" }))
 public class UserRole{
 
-	private Integer userRoleId;
-	private User user;
+	
+	
 	private String role;
 
 	public UserRole() {
@@ -29,20 +31,30 @@ public class UserRole{
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "user_role_id", unique = true, nullable = false)
-	public Integer getUserRoleId() {
+	@GeneratedValue
+	@Column(name = "user_role_id")
+	private Long userRoleId;
+	
+	
+	
+	
+	
+	public Long getUserRoleId() {
 		return this.userRoleId;
 	}
 
-	public void setUserRoleId(Integer userRoleId) {
+	public void setUserRoleId(Long userRoleId) {
 		this.userRoleId = userRoleId;
 	}
 	/*
 	 * Setting up relations between roles and user (many roles one user)
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
+	
 	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	
 	public User getUser() {
 		return this.user;
 	}

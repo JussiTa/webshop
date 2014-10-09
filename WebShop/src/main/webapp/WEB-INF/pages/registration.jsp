@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
@@ -13,16 +15,15 @@
         <form:form action="register" method="post" commandName="userForm">
             <table border="0">
                 <tr>
-                    <td colspan="2" align="center"><h2>Please fill your details for registration.</h2></td>
+                    <td colspan="2" align="center"><h2>Registration</h2></td>
                 </tr>
-                
-                <tr>
-                    <td>First name:</td>
+                 <tr>
+                    <td>Firstname:</td>
                     <td><form:input path="firstname" /></td>
                 </tr>
                 
-                <tr>
-                    <td>Last name:</td>
+                 <tr>
+                    <td>Lastname:</td>
                     <td><form:input path="lastname" /></td>
                 </tr>
                 
@@ -32,27 +33,23 @@
                 </tr>
                 
                 <tr>
-                    <td>Zipcode:</td>
+                    <td>ZipCode:</td>
                     <td><form:input path="zipcode" /></td>
                 </tr>
                 
-                <tr>
+                 <tr>
                     <td>Town:</td>
                     <td><form:input path="town" /></td>
                 </tr>
-                
-                
-                
                 <tr>
-                    <td>User Name:</td>
+                    <td>Username:</td>
                     <td><form:input path="username" /></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td><form:password path="password" /></td>
                 </tr>
-               
-               
+                
                
                 <tr>
                     <td colspan="2" align="center"><input type="submit" value="Register" /></td>

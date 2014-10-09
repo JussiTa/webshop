@@ -15,21 +15,35 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import fi.webshop.users.dao.ProductDao;
+import fi.webshop.users.dao.UserDao;
+import fi.webshop.users.model.ForNullTest;
+import fi.webshop.users.model.Product;
 import fi.webshop.users.model.User;
+import fi.webshop.users.model.UserRole;
+import fi.webshop.users.service.ProductService;
 import fi.webshop.users.service.UserService;
+
 
 @Controller
 public class UserController {
 
 	@Autowired(required = true)
 	private UserService userService;
-	
+
+	@Autowired(required = true)
+	private ProductService productService;
+
+	UserDao dao;
+	UserRole ur;
 
 	@Qualifier(value = "userService")
 	public void setUserService(UserService us) {
@@ -122,28 +136,30 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String viewRegistration(Map<String, Object> model) {
+	public String viewRegistrationForm(Map<String, Object> model) {
 		User userForm = new User();
 		model.put("userForm", userForm);
-		
-         
 
 		return "registration";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String processRegistration(@ModelAttribute("userForm") User user,
-			Map<String, Object> model) {
-
-		// implement your own registration logic here...
+			 Map<String, Object> model) {
 
 		// for testing purpose:
 		System.out.println("username: " + user.getUsername());
 		System.out.println("password: " + user.getPassword());
-
-		return "RegistrationSuccess";
+		System.out.println("firstname: " + user.getClass());
+		ur = new UserRole(user, "ROLE_USER");
+	    ur.setUser(user);
+	    user.addRole(ur);
+	    user.setEnabled(true);
+	    
+		
+		userService.addNewUser(user);
+		return "registrationSuccess";
 	}
 
-}
-	
 
+}

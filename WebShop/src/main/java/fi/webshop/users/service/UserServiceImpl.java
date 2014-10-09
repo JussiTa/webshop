@@ -4,7 +4,10 @@
 package fi.webshop.users.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+
+import fi.webshop.users.dao.UserDao;
 import fi.webshop.users.model.User;
 
 /**
@@ -13,13 +16,19 @@ import fi.webshop.users.model.User;
  */
 @Service
 public class UserServiceImpl implements UserService {
+	
+	private UserDao userDao;
+	
+	
+	
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
-	/* (non-Javadoc)
-	 * @see fi.webshop.users.service.UserService#addNewUser(fi.webshop.users.model.User)
-	 */
 	@Override
+	@Transactional
 	public void addNewUser(User u) {
-		// TODO Auto-generated method stub
+		userDao.addNewUser(u);
 
 	}
 

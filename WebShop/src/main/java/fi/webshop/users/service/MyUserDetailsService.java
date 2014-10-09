@@ -34,8 +34,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
 		fi.webshop.users.model.User user = userDao.findByUserName(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user
-				.getUserRole());
-
+				.getRoles());
+		
+		
 		return buildUserForAuthentication(user, authorities);
 
 	}

@@ -3,6 +3,7 @@ package fi.webshop.users.service;
 
 import java.util.List;
 
+import fi.webshop.users.model.ForNullTest;
 import fi.webshop.users.model.Product;
 
 /**
@@ -20,5 +21,7 @@ public interface ProductService {
 	void removeProduct(int id);
 
 	public Product getProductById(int id);
+	
+	public void addForNullTest(ForNullTest t);
 
 }

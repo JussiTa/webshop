@@ -4,6 +4,7 @@ package fi.webshop.users.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "users")
 public class User {
-	private Long id;
+	
 	private String username;
 	private String password;
 	private String firstname;
@@ -26,7 +27,7 @@ public class User {
 	private String zipcode;
 	private String town;
 	private boolean enabled;
-	private Set<UserRole> userRole = new HashSet<UserRole>(0);
+
 
 	public User() {
 	}
@@ -87,14 +88,15 @@ public class User {
 	/*
 	 * Setting up relations between user and it's roles (one to many)
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<UserRole> getUserRole() {
-		return this.userRole;
-	}
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)	
+	private Set<UserRole> userRole = new HashSet<UserRole>();
+	
 
 	public void setUserRole(Set<UserRole> userRole) {
-		this.userRole = userRole;
+		this.userRole= userRole;
 	}
+	
+	
     @Column(name= "lastname", nullable =false, length = 20)
 	public String getLastname() {
 		return lastname;
@@ -128,16 +130,41 @@ public class User {
 		this.town = town;
 	}
 	
+	/*@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "STOCK_ID", unique = true, nullable = false)
+	public Integer getStockId() {
+		return this.stockId;
+	}
+	*/
+	
+	/*@Id()
+	  @GeneratedValue(strategy = GenerationType.AUTO)
+	  @Column(name = "id")*/
+	
+	
+	
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-
+	@GeneratedValue
+	
+	@Column(name = "user_id", unique = true, nullable = false)
+	private Long id;
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Set<UserRole> getRoles(){
+		return this.userRole;
+	}
+	
+	public void addRole(UserRole role){
+		this.userRole.add(role);
+		
+		
 	}
 
 }

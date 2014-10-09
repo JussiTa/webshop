@@ -7,6 +7,7 @@ CREATE  TABLE users (
   address VARCHAR (20) NOT NULL,
   zipcode int (5) NOT NULL,
   town VARCHAR (20)NOT NULL,  
+  enabled TINYINT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (user_id));
 
 CREATE TABLE user_roles (
@@ -14,9 +15,9 @@ CREATE TABLE user_roles (
   user_id int(45) NOT NULL,
   role varchar(45) NOT NULL,
   PRIMARY KEY (user_role_id),
-  UNIQUE KEY uni_username_role (role,user_id),
-  KEY fk_username_idx (user_id),
-  CONSTRAINT fk_username FOREIGN KEY (user_id) REFERENCES users (user_id));
+  UNIQUE KEY uni_username_role (ROLE,user_id),
+  KEY fk_userid_idx (user_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (user_id));
 
 INSERT INTO users(id, username,password,enabled)
 VALUES ('admin','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS', true);

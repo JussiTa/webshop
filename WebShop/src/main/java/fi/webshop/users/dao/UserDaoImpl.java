@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import fi.webshop.users.model.User;
@@ -27,7 +28,12 @@ public class UserDaoImpl implements UserDao {
 				.setParameter(0, username).list();
 
 		if (users.size() > 0) {
+			
+			System.out.println("**************User_role_: "+users.get(0).getRoles());
 			return users.get(0);
+			
+
+			
 		} else {
 			return null;
 		}
@@ -44,22 +50,11 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void addNewUser(User u) {
-			
-		try {
-			getSessionFactory().getCurrentSession().beginTransaction();
-			getSessionFactory().getCurrentSession().save(u);
-			getSessionFactory().getCurrentSession().getTransaction().commit();
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			getSessionFactory().getCurrentSession().getTransaction().rollback();
-		}
+		String pw_hash = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt(10));	
+		u.setPassword(pw_hash);
+		getSessionFactory().getCurrentSession().persist(u);
 		
 	}
-
-	/*
-	 * 
-	 * Updating User name)
-	 */
 	@Override
 	public void updateuser(String username) {
 		
