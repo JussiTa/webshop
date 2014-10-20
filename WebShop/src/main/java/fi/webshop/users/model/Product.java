@@ -20,20 +20,36 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
 
+	public String getGategory() {
+		return gategory;
+	}
+
+	public void setGategory(String gategory) {
+		this.gategory = gategory;
+	}
+
 	@Id
-	@Column(name = "id")
+	@Column(name = "product_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	
+	@Column (name= "productname", nullable =false,length = 10)
 	private String name;
+	
+	
+	@Column (name= "gategory", nullable =false,length = 10)
+	private String gategory;
+	@Column (name= "price", nullable =false,length = 10)
 	private double price;
 
 	// Getters and setters.
 	public int getId() {
 		return id;
-	}
+	}	
 
 	public void setId(int id) {
 		this.id = id;

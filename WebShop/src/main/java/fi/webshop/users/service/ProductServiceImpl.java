@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.webshop.users.dao.ProductDao;
+import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.ForNullTest;
 import fi.webshop.users.model.Product;
 
@@ -32,8 +33,17 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Product> listProducts() {
-		return this.productDao.listProducts();
+	public List<Product> listProducts() throws ProductsNotFoundException {
+		List<Product> list = null;
+	//	try{
+		list= this.productDao.listProducts();
+		
+	//	}catch(NullPointerException e){
+	//		e.printStackTrace();
+	//	}
+		return list;
+		
+		
 	}
 
 	@Transactional

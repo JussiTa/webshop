@@ -9,7 +9,7 @@ import fi.webshop.users.model.Product;
 
 public interface ProductDao {
 
-	public List<Product> listProducts();
+	public List<Product> listProducts() throws ProductsNotFoundException;
 
 	public void addProduct(Product p);
 

@@ -37,7 +37,7 @@
 </head>
 <body onload='document.loginForm.username.focus();'>
 
-	<h1>Spring Security Login Form (Database + Hibernate Authentication)</h1>
+	
 
 	<div id="login-box">
 

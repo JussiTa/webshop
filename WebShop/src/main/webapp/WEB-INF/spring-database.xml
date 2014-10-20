@@ -54,6 +54,28 @@ class="fi.webshop.users.service.MyUserDetailsService">
 class="fi.webshop.users.service.UserServiceImpl">
 <property name="userDao" ref="userDao" />
 </bean>
+
+
+<bean id="productDao" class="fi.webshop.users.dao.ProductDaoImpl">
+<property name="sessionFactory" ref="sessionFactory" />
+</bean>
+<bean id="productService"
+class="fi.webshop.users.service.ProductServiceImpl">
+<property name="productDao" ref="productDao" />
+</bean>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- MUST have transaction manager, using aop and aspects -->
 <bean id="transactionManager"
 class="org.springframework.orm.hibernate4.HibernateTransactionManager">

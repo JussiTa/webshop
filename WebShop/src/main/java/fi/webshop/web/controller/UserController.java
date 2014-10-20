@@ -32,7 +32,6 @@ import fi.webshop.users.model.UserRole;
 import fi.webshop.users.service.ProductService;
 import fi.webshop.users.service.UserService;
 
-
 @Controller
 public class UserController {
 
@@ -51,16 +50,30 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home**" }, method = RequestMethod.GET)
 	public ModelAndView defaultPage() {
 
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Web shop for finnish food");
 		model.addObject("message", "Welcome our shop!");
-		model.setViewName("hello");
+		model.setViewName("home");
 		return model;
 
 	}
+	
+	
+	@RequestMapping(value =  "/about**", method = RequestMethod.GET)
+	public String aboutPage() {
+
+		
+		return "about";
+
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
@@ -145,21 +158,19 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String processRegistration(@ModelAttribute("userForm") User user,
-			 Map<String, Object> model) {
+			Map<String, Object> model) {
 
 		// for testing purpose:
 		System.out.println("username: " + user.getUsername());
 		System.out.println("password: " + user.getPassword());
 		System.out.println("firstname: " + user.getClass());
 		ur = new UserRole(user, "ROLE_USER");
-	    ur.setUser(user);
-	    user.addRole(ur);
-	    user.setEnabled(true);
-	    
-		
+		ur.setUser(user);
+		user.addRole(ur);
+		user.setEnabled(true);
+
 		userService.addNewUser(user);
 		return "registrationSuccess";
 	}
-
 
 }

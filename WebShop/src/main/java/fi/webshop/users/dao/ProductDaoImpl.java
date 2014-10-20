@@ -1,5 +1,6 @@
 package fi.webshop.users.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -44,9 +45,18 @@ public class ProductDaoImpl implements ProductDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> listProducts() {
+	public List<Product> listProducts() throws ProductsNotFoundException {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<Product> productsList = session.createQuery("from Product").list();
+		
+		List<Product> productsList = 	(List<Product>) session.createQuery("from Product").list();
+
+		if(productsList == null){
+			System.out.print("*************************************************");	
+			throw new ProductsNotFoundException("Not product available");
+		
+		}
+		
+		
 		for (Product p : productsList) {
 			logger.info("Product List::" + p);
 		}

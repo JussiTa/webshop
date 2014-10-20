@@ -11,24 +11,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.Product;
 import fi.webshop.users.service.ProductService;
 import fi.webshop.web.view.Cart;
-
-
 
 /**
  * @author Jussi
  * 
  *         This controller class handler product from db to web site and to
  *         cart.
- *
+ * 
  */
 @Controller
 @Scope("session")
@@ -59,8 +57,19 @@ public class ProductController {
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String listProducts(Model model) {
+		
 		model.addAttribute("product", new Product());
-		model.addAttribute("listProducts", this.productService.listProducts());
+		
+		try{
+			model.addAttribute("listProducts", this.productService.listProducts());
+			
+		
+		} catch(NullPointerException e){
+			model.addAttribute("errorMessage", "No products!");
+			
+		}
+		
+		
 		return "product";
 	}
 
@@ -95,12 +104,16 @@ public class ProductController {
 		return "redirect:/products";
 	}
 
-	
-	  @RequestMapping("/edit/{id}") public String
-	  editProduct(@PathVariable("id") int id, Model model) {
-	  model.addAttribute("product", this.productService.getProductById(id));
-	  model.addAttribute("listProducts", this.productService.listProducts());
-	  return "product"; }
-	 
+	@RequestMapping("/edit/{id}")
+	public String editProduct(@PathVariable("id") int id, Model model) {
+		model.addAttribute("product", this.productService.getProductById(id));
+		try {
+			model.addAttribute("listProducts", this.productService.listProducts());
+		} catch (ProductsNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "product";
+	}
 
 }

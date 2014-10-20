@@ -3,6 +3,7 @@ package fi.webshop.users.service;
 
 import java.util.List;
 
+import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.ForNullTest;
 import fi.webshop.users.model.Product;
 
@@ -12,7 +13,7 @@ import fi.webshop.users.model.Product;
  */
 public interface ProductService {
 
-	List<Product> listProducts();
+	List<Product> listProducts() throws ProductsNotFoundException;
 
 	void addProduct(Product p);
 

@@ -1,5 +1,104 @@
-body {
-    background-color: #b0c4de;
-} 
+
+#header {
+    background-color:green;
+    color:black;
+    text-align:center;
+    padding:5px;
+}
+
+#section {
+   
+    float:left;
+    padding:10px;	 	 
+}
+
+
+#footer {
+    background-color:blue;
+    color:black;
+    clear:both;   
+   padding:5px;	 	 
+}
+
+
+
+#link {
+    text-align:right;
+    color:black;	 	 
+}
+
+
+#cart {
+    image-align:left;    
+    height:30px;
+    width:30px;
+    	 	 
+}
+
+
+ul {
+	list-style-type: none;
+	margin: 10;
+	padding: 0;
+}
+
+p {
+	color: black;
+	/* This is a single-line comment */
+	
+	font-size: 16px;
+}
+
+h2 {
+	color: red;
+}
+
+table.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #ccc;
+}
+
+table.tg td {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #ccc;
+	color: #333;
+	background-color: #fff;
+}
+
+table.tg th {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #ccc;
+	color: #333;
+	background-color: #f0f0f0;
+}
+
+table.tg .tg-4eph {
+	background-color: #f9f9f9
+}
+
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:100px;
+    float:left;
+    padding:5px;	      
+}
+
+
 
 
