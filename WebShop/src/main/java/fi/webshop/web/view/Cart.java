@@ -1,59 +1,83 @@
 package fi.webshop.web.view;
 
 /**
-* This class handles shopping cart content: adding removing...
-*/
-
+ * This class handles shopping cart content: adding removing...
+ * @Scope session means that content of the Cart shows every pages.
+ */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import fi.webshop.users.model.Product;
-
 
 
 /**
-* @author justapis
-*
-*/
+ * @author justapis
+ * @param <K>
+ * 
+ */
 
-@Component
 @Scope("session")
 public class Cart {
 
-	private List<Product> productList = new ArrayList<Product>();
+	/**
+	 * 
+	 */
 
-	public void addProduct(Product p) {
-		productList.add(p);
+	private List<CartItem> productList = new ArrayList<CartItem>();
+	private double total;
 
+	private HashMap<String, CartItem> id = new HashMap<String, CartItem>();
+
+	public void addProduct(CartItem ci) {
+		if (!id.containsKey(ci.getId())) {
+			ci.setPcs(1);
+			id.put(ci.getId(), ci);
+
+			productList.add(ci);
+		} else {
+			CartItem ci2 = (CartItem) id.get(ci.getId());
+
+			ci2.setPcs(1);
+
+		}
+
+		total += ci.getPrice();
 	}
 
-	public List<Product> getProductList() {
+	public List<CartItem> getProductList() {
 
 		return this.productList;
 	}
 
-	public void removeProduct(Product p) {
-		for (ListIterator<Product> iter = productList.listIterator(); iter
+	public void removeProduct(CartItem ci) {
+		for (ListIterator<CartItem> iter = productList.listIterator(); iter
 				.hasNext();) {
-			Product p2 = iter.next();
-			if (p2.getId() == p.getId())
+			CartItem ci2 = iter.next();
+			if (ci2.getId() == ci.getId())
 				iter.remove();
 		}
 	}
 
-	public Product getProductById(int id) {
-		Product p2 = null;
-		for (ListIterator<Product> iter = productList.listIterator(); iter
-				.hasNext();) {
-			p2 = iter.next();
-			if (p2.getId() == id)
-				break;
-		}
-		return p2;
+	/*
+	 * public CartItem getProductById(int id) { CartItem ci2 = null; for
+	 * (ListIterator<CartItem> iter = productList.listIterator(); iter
+	 * .hasNext();) { ci2 = iter.next(); if (ci2.getId() == id) break; } return
+	 * ci2;
+	 * 
+	 * }
+	 */
+
+	public double getTotal() {
+
+		return this.total;
+
+	}
+
+	public List<CartItem> getItems() {
+		return this.productList;
 
 	}
 

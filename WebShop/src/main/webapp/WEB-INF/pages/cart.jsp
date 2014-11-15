@@ -1,77 +1,60 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
 <html>
 <head>
+ <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"> 
 <title>Cart</title>
-<style type="text/css">
-.tg {
-	border-collapse: collapse;
-	border-spacing: 0;
-	border-color: #ccc;
-}
 
-.tg td {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	border-color: #ccc;
-	color: #333;
-	background-color: #fff;
-}
 
-.tg th {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	border-color: #ccc;
-	color: #333;
-	background-color: #f0f0f0;
-}
 
-.tg .tg-4eph {
-	background-color: #f9f9f9
-}
-</style>
-
-<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet" >
+<link href="${pageContext.request.contextPath}/resources/css/main.css"
+	rel="stylesheet">
 </head>
 <body>
 
-
-
-
-
 	<br>
 	<h3>Cart content</h3>
-	<c:if test="${!empty listProducts}">
+	<c:if test="${!empty cart}">
 		<table class="tg">
 			<tr>
 				<th width="80">Product ID</th>
 				<th width="120">Product Name</th>
 				<th width="120">Product price</th>
+				<th width="30">Pcs</th>
 
 			</tr>
-			<c:forEach items="${listProducts}" var="product">
+			<c:forEach items="${cart}" var="ci">
 				<tr>
-					<td>${product.id}</td>
-					<td>${product.name}</td>
-					<td>${product.price}</td>
-
-				</tr>
+					<td>${ci.id}</td>
+					<td>${ci.name}</td>
+					<td>${ci.price}</td>
+					<td>${ci.pcs}</td>
+					
+				</tr>				
+				
 			</c:forEach>
-
+			
+			
+		</table>		
+		
+		<table>	
+			<tr>
+				<th width="CDATA">Total sum (EUR)</th>	
+			<tr>
+				<td>${total} EUR	</td>
+			</tr>		
 		</table>
+		
+		<a href="http://localhost:8080/Webshop/checkout">Checkout</a>
+		
+		
+		<a href="http://localhost:8080/Webshop/products">Continue shopping</a>
+		
+		
+		
 	</c:if>
 </body>
 </html>

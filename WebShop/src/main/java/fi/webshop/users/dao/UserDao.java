@@ -1,5 +1,6 @@
 package fi.webshop.users.dao;
 
+import fi.webshop.users.model.Order;
 import fi.webshop.users.model.User;
 
 /*
@@ -14,8 +15,12 @@ public interface UserDao {
 
 	public void addNewUser(User u);
 
-	public void updateuser(String username);
+	public void updateUser(Order o,String username);
 
 	public User findUserById(int id);
+	
+	public void addOrder(Order o, User u);
+
+	public void updateUser(User user);
 
 }

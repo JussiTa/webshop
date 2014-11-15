@@ -5,6 +5,7 @@ package fi.webshop.users.dao;
 import java.util.List;
 
 import fi.webshop.users.model.Product;
+import fi.webshop.web.view.Cart;
 
 
 public interface ProductDao {
@@ -18,5 +19,7 @@ public interface ProductDao {
 	public Product getProductById(int id);
 
 	public void removeProduct(int id);
+
+	public Cart updateMount(Cart cart);
 
 }

@@ -22,13 +22,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "products")
 public class Product {
+	
+	
+	
+	public Product(String name,String category, double price){
+		this.name = name;
+		this.category = category;
+		this.price = price;		
+	}
+	
 
-	public String getGategory() {
-		return gategory;
+	public Product() {		
 	}
 
-	public void setGategory(String gategory) {
-		this.gategory = gategory;
+
+	public String getcategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Id
@@ -41,10 +54,13 @@ public class Product {
 	private String name;
 	
 	
-	@Column (name= "gategory", nullable =false,length = 10)
-	private String gategory;
+	@Column (name= "category", nullable =false,length = 10)
+	private String category;
 	@Column (name= "price", nullable =false,length = 10)
 	private double price;
+
+    @Column (name ="pcs",length =3)
+	private int pcs;
 
 	// Getters and setters.
 	public int getId() {
@@ -74,5 +90,15 @@ public class Product {
 	@Override
 	public String toString() {
 		return "id=" + id + ", name=" + name + ", price=" + price;
+	}
+
+
+	public int getPcs() {
+		return pcs;
+	}
+
+
+	public void setPcs(int pcs) {
+		this.pcs+=pcs;
 	}
 }

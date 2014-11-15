@@ -1,16 +1,16 @@
 package fi.webshop.users.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.ListIterator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import fi.webshop.users.model.Product;
+import fi.webshop.web.view.Cart;
+import fi.webshop.web.view.CartItem;
 
 
 /**
@@ -47,19 +47,15 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<Product> listProducts() throws ProductsNotFoundException {
 		Session session = this.sessionFactory.getCurrentSession();
-		
-		List<Product> productsList = 	(List<Product>) session.createQuery("from Product").list();
+		List<Product> productsList;
+		try{
+		productsList = 	(List<Product>) session.createQuery("from Product").list();
 
-		if(productsList == null){
-			System.out.print("*************************************************");	
+		} catch (NullPointerException e){				
 			throw new ProductsNotFoundException("Not product available");
-		
 		}
 		
-		
-		for (Product p : productsList) {
-			logger.info("Product List::" + p);
-		}
+			
 		return productsList;
 	}
 
@@ -80,6 +76,42 @@ public class ProductDaoImpl implements ProductDao {
 		}
 
 		logger.info("Product deleted successfully, product details=" + p);
+	}
+
+	@Override
+	public Cart updateMount(Cart cart) {
+		CartItem ci;
+		Cart cart2;
+		boolean sufficient =false;
+		for(ListIterator<CartItem> iter = cart.getProductList().listIterator();
+				iter.hasNext();){			
+			    ci=iter.next();
+			sufficient =   checkAmountOfDb(ci);
+			if(! sufficient)
+				ci.setSufficient(false);
+		}		
+		cart2=cart;
+		return cart2;
+	 
+		
+	}
+
+	private boolean checkAmountOfDb(CartItem ci) {
+		Session session = this.sessionFactory.getCurrentSession();		
+		Product p;		
+		p = (Product) session.createQuery("from Product")
+				.setParameter(0,ci.getName());	
+		
+		if(ci.getPcs()>p.getPcs())
+			return false;
+		else{
+			int result;
+			result = p.getPcs()-ci.getPcs();
+			p.setPcs(result);			
+			session.update(p);			
+			
+		return true;
+		}
 	}
 
 	

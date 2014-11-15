@@ -1,3 +1,9 @@
+/* .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 5px 5px; white-space: nowrap; overflow: hidden; font-size:22px}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: bold; color: #3399FF; }
+ */
+
 
 #header {
     background-color:green;
@@ -9,7 +15,8 @@
 #section {
    
     float:left;
-    padding:10px;	 	 
+    padding:10px;
+   	 
 }
 
 
@@ -24,6 +31,12 @@
 
 #link {
     text-align:right;
+    color:black;	 	 
+}
+
+
+#linkleft {
+    text-align:left;
     color:black;	 	 
 }
 
@@ -99,6 +112,43 @@ table.tg .tg-4eph {
     padding:5px;	      
 }
 
+
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #ccc;
+}
+
+.tg td {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #ccc;
+	color: #333;
+	background-color: #fff;
+}
+
+.tg th {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #ccc;
+	color: #333;
+	background-color: #f0f0f0;
+}
+
+.tg .tg-4eph {
+	background-color: #f9f9f9
+}
 
 
 

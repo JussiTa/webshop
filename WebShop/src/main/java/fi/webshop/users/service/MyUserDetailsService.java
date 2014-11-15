@@ -23,8 +23,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	 * 
 	 */
 
-	private UserDao userDao;
-	
+	private UserDao userDao;	
 
 	@Override
 	public UserDetails loadUserByUsername(final String username)
@@ -33,8 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		
 
 		fi.webshop.users.model.User user = userDao.findByUserName(username);
-		List<GrantedAuthority> authorities = buildUserAuthority(user
-				.getRoles());
+		List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
 		
 		
 		return buildUserForAuthentication(user, authorities);

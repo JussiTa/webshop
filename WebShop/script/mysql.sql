@@ -27,12 +27,28 @@ CREATE TABLE user_roles (
   PRIMARY KEY (product_id));
   
   
+  create table orders (
+   order_id INT NOT NULL auto_increment,
+   order_name VARCHAR(30) default NULL,
+   user_id INT default NULL,
+   order_date datetime,
+   PRIMARY KEY (id)
+);
+
+
+ create table order_items (
+   item_id INT NOT NULL auto_increment,
+   order_name VARCHAR(30) default NULL,
+   order_id INT default NULL,
+   itemprice double,
+   price double,
+   pcs INT,
+   PRIMARY KEY (item_id)
+);  
   
 
 INSERT INTO users(id, username,password,enabled)
 VALUES ('admin','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS', true);
-INSERT INTO users(id,username,password,enabled)
-VALUES ('alex','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS', true);
 
 INSERT INTO user_roles (username, role)
 VALUES ('admin', 'ROLE_USER');
@@ -43,4 +59,4 @@ VALUES ('user', 'ROLE_USER');
 
 
 INSERT INTO products (productname, gategory, price)
-VALUES ('vehnä', 'viljat', 0.89);
+VALUES ('vehnï¿½', 'viljat', 0.89);

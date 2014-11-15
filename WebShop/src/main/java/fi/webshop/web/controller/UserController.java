@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import fi.webshop.users.dao.ProductDao;
-import fi.webshop.users.dao.UserDao;
-import fi.webshop.users.model.ForNullTest;
+import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.Product;
 import fi.webshop.users.model.User;
 import fi.webshop.users.model.UserRole;
@@ -35,55 +32,59 @@ import fi.webshop.users.service.UserService;
 @Controller
 public class UserController {
 
-	@Autowired(required = true)
+	@Autowired
 	private UserService userService;
-
-	@Autowired(required = true)
+	private UserRole ur;
+	@Autowired
 	private ProductService productService;
 
-	UserDao dao;
-	UserRole ur;
-
-	@Qualifier(value = "userService")
+	
 	public void setUserService(UserService us) {
 		this.userService = us;
 
 	}
 
-	@RequestMapping(value = { "/", "/home**" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView defaultPage() {
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Web shop for finnish food");
-		model.addObject("message", "Welcome our shop!");
-		model.setViewName("home");
+		ModelAndView model = new ModelAndView("home");
+
 		return model;
 
 	}
-	
-	
-	@RequestMapping(value =  "/about**", method = RequestMethod.GET)
-	public String aboutPage() {
 
-		
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String aboutPage(ModelMap model) {
+
 		return "about";
 
 	}
-	
-	
-	
-	
-	
 
-	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutPage(ModelMap model) {
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "WebShop");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
+		return "logout";
 
-		return model;
+	}
+
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String showProductsInadminPage(Model model) {
+
+		model.addAttribute("product", new Product());
+
+		try {
+			model.addAttribute("listProducts",
+					this.productService.listProducts());
+
+		} catch (ProductsNotFoundException e) {
+			model.addAttribute("errorMessage", "No products!");
+
+		}
+
+		model.addAttribute("title", "WebShop");
+		model.addAttribute("message", "This page is for ROLE_ADMIN only!");
+
+		return "admin";
 
 	}
 
@@ -101,6 +102,7 @@ public class UserController {
 
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
+
 		}
 		model.setViewName("login");
 
@@ -160,10 +162,6 @@ public class UserController {
 	public String processRegistration(@ModelAttribute("userForm") User user,
 			Map<String, Object> model) {
 
-		// for testing purpose:
-		System.out.println("username: " + user.getUsername());
-		System.out.println("password: " + user.getPassword());
-		System.out.println("firstname: " + user.getClass());
 		ur = new UserRole(user, "ROLE_USER");
 		ur.setUser(user);
 		user.addRole(ur);
@@ -172,5 +170,17 @@ public class UserController {
 		userService.addNewUser(user);
 		return "registrationSuccess";
 	}
-
+	
+	
+	
+	
+	
+	@RequestMapping(value="/edit",method=RequestMethod.POST)
+	public String processUserEdits(@ModelAttribute("editform")User user,
+			Map<String,Object> model){
+		
+		userService.updateUser(user);
+		
+		return "";
+	}
 }
