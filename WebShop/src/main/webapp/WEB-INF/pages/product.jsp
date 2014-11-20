@@ -1,13 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page session="true"%>
+
 <html>
 <head>
 
 
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+	src="<c:url value="/resources/css/jquery.autocomplete.min.js" />"></script>
 
-<script src="<c:url value="/resources/css/jquery.autocomplete.min.js" />"></script> 
 <link href="${pageContext.request.contextPath}/resources/css/main.css"
 	rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8">
@@ -34,29 +37,32 @@
 			<li><a href="http://localhost:8080/Webshop/register">Register
 			</a></li>
 			<li><a href="http://localhost:8080/Webshop/about">About </a></li>
-
-
 		</ul>
 	</div>
 
-	
+
 
 	<div id="section">
 		<h2>
 			<c:out value="${errorMessage}" />
 		</h2>
 
-		<div>
-			<input type="text" id="w-input-search" value=""> <span>
-				<button id="button-id" type="button">Search</button>
-			</span>
-		</div>
+		<c:url var="findaction" value="/findproduct"></c:url>
 
-		     
-     <script>
+		<form:form action="${findaction}" commandName="product">
+
+			<form:input type="text" id="product-search" value="" path="name" />
+			<span> <!-- <button id="button-id" type="button">Search</button> -->
+				<input type="submit" value="Search" />
+
+			</span>
+
+		</form:form>
+
+		<script>
   $(document).ready(function() {
  
-	$('#w-input-search').autocomplete({
+	$('#product-search').autocomplete({
 		serviceUrl: '${pageContext.request.contextPath}/getTags',
 		paramName: "tagName",
 		delimiter: ",",
@@ -79,53 +85,45 @@
   </script>
 		<br>
 		<h3>Product List</h3>
-		
-		
 		<c:if test="${!empty listProducts}">
-			<table class="tg">
+			<table class="tg" id="tblData">
 				<tr>
 					<th width="80">Product ID</th>
 					<th width="120">Product Name</th>
 					<th width="120">Product Gategory</th>
 					<th width="120">Product price</th>
 					<th width="120">add to cart</th>
-					<!-- 	<img alt="logo" src="/resources/images/shoppingcart.svg"/> -->
-
 				</tr>
-				
-				
-					
-				
-				<c:forEach items="${listProducts}" var="product">
-					<tr>
-						
-						<td>${product.id}</td>
-						<td>${product.name}</td>
-						<td>${product.category}</td>
-						<td>${product.price}</td>
-						<td>
-						<form:form action="addtocart" commandName="userForm">
-						<form:input path="pcs" />
-            					
-        						<input type="submit"
-                    				value="<spring:message text="Add Product to cart"/>" />
-        				</form:form>	
-        				</td>
-						<%-- 
-						<td><a
-							href="${pageContext.request.contextPath}/addtocart/${product.id}/addtocart2/${product.name}/addtocart3/${product.price}">Add
-								to cart</a></td> --%>
-					</tr>
 
+				<c:forEach items="${listProducts}" var="product">
+					<c:url var="addAction" value="/addtoCart"></c:url>
+					<form:form action="${addAction}">
+						<tr>
+							<td>${product.id}<input type="hidden" name="id"
+								value="${product.id}">
+							</td>
+							<td>${product.name}<input type="hidden" name="name"
+								value="${product.name}">
+							</td>
+							<td>${product.category}<input type="hidden" name="category"
+								value="${product.category}">
+							</td>
+							<td>${product.price}<input type="hidden" name="price"
+								value="${product.price}">
+							</td>
+							<td><input type="text" name="pcs"></td>
+							<td><input type="submit" value="Add to cart" /></td>
+						</tr>
+					</form:form>
 				</c:forEach>
-				
-				
-				
+
+
+
 			</table>
-			
-			
+
+
+
 		</c:if>
-	
 
 	</div>
 

@@ -18,15 +18,17 @@ public interface ProductService {
 
 	List<Product> listProducts() throws ProductsNotFoundException;
 
-	void addProduct(Product p);
+	public void addProduct(Product p);
 
-	void updateProduct(Product p);
+	public void updateProduct(Product p);
 
-	void removeProduct(int id);
+	public void removeProduct(int id);
 
 	public Product getProductById(int id);
 
 	public Cart updateProductAmount(Cart cart);
+
+	public List<Product> getProductByName(String string);
 	
 	
 

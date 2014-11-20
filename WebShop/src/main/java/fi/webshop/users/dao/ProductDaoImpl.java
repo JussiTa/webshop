@@ -1,7 +1,9 @@
 package fi.webshop.users.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import fi.webshop.users.model.Product;
+import fi.webshop.users.model.User;
 import fi.webshop.web.view.Cart;
 import fi.webshop.web.view.CartItem;
 
@@ -98,8 +101,9 @@ public class ProductDaoImpl implements ProductDao {
 
 	private boolean checkAmountOfDb(CartItem ci) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Product p;		
-		p = (Product) session.createQuery("from Product")
+		Product p;	
+		String hql = "FROM Product name =ci.getName()=?";
+		p = (Product) session.createQuery(hql)
 				.setParameter(0,ci.getName());	
 		
 		if(ci.getPcs()>p.getPcs())
@@ -112,6 +116,21 @@ public class ProductDaoImpl implements ProductDao {
 			
 		return true;
 		}
+	}
+
+	@Override
+	public List<Product> getProductByName(String name) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Product> products = new ArrayList<Product>();
+			
+		String hql = "FROM Product WHERE productname =?";
+		products =  session.createQuery(hql)
+				.setParameter(0,name).list();	
+		
+			
+		System.out.println("*******************************"+products.get(0).getName());
+		
+		return products;
 	}
 
 	

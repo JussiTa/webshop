@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -151,23 +153,26 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String viewRegistrationForm(Map<String, Object> model) {
+	public String viewRegistrationForm(ModelMap model) {
 		User userForm = new User();
-		model.put("userForm", userForm);
+		model.addAttribute("userForm", userForm);
 
 		return "registration";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration(@ModelAttribute("userForm") User user,
-			Map<String, Object> model) {
+	public String processRegistration( @Valid @ModelAttribute ("userForm") User userForm,
+			BindingResult br, Map<String, Object>model) {
+		
+		if(br.hasErrors())
+			return "registration";
 
-		ur = new UserRole(user, "ROLE_USER");
-		ur.setUser(user);
-		user.addRole(ur);
-		user.setEnabled(true);
+		ur = new UserRole(userForm, "ROLE_USER");
+		ur.setUser(userForm);
+		userForm.addRole(ur);
+		userForm.setEnabled(true);
 
-		userService.addNewUser(user);
+		userService.addNewUser(userForm);
 		return "registrationSuccess";
 	}
 	

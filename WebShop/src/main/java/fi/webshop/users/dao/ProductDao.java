@@ -17,6 +17,7 @@ public interface ProductDao {
 	public void updateProduct(Product p);	
 
 	public Product getProductById(int id);
+	public List<Product> getProductByName(String name);
 
 	public void removeProduct(int id);
 

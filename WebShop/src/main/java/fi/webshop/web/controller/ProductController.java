@@ -6,11 +6,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.Product;
 import fi.webshop.users.model.User;
+import fi.webshop.users.model.UserRole;
 import fi.webshop.users.service.ProductService;
 import fi.webshop.web.view.Cart;
 import fi.webshop.web.view.CartItem;
@@ -38,8 +42,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	//@Autowired
 	private Cart cart = new Cart();
+	
 
 	public void setProductService(ProductService ps) {
 		this.productService = ps;
@@ -50,23 +54,20 @@ public class ProductController {
 
 	ProductController() {
 		// init data for testing
-		data.add(new Tag(1, "ruby"));
-		data.add(new Tag(2, "rails"));
-		data.add(new Tag(3, "c / c++"));
-		data.add(new Tag(4, ".net"));
-		data.add(new Tag(5, "python"));
-		data.add(new Tag(6, "java"));
-		data.add(new Tag(7, "javascript"));
-		data.add(new Tag(8, "jscript"));
+		data.add(new Tag(1, "ryepowder"));
+		data.add(new Tag(2, "wheatpowder"));
+		data.add(new Tag(3, "rolledwheat"));
+		data.add(new Tag(4, "oatmeal"));
+		data.add(new Tag(5, "oatpowder"));
+		data.add(new Tag(6, "crushed wheat"));
 
 	}
 
-	
 	// Getting products from database and showing them via model.
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public String listProducts(Model model, HttpServletRequest request) {		
-		 request.getSession().setAttribute("cart", cart);
+	public String listProducts(Model model, HttpServletRequest request) {
+		request.getSession().setAttribute("cart", cart);
 		model.addAttribute("product", new Product());
 
 		try {
@@ -80,6 +81,32 @@ public class ProductController {
 		return "product";
 	}
 
+	// Preparing form asking product from DB by name.
+	@RequestMapping(value = "/findproduct", method = RequestMethod.GET)
+	public String viewSearchForm(ModelMap model) {
+		Product productFormByName = new Product();
+		model.addAttribute("p", productFormByName);
+
+		return "product";
+	}
+
+	@RequestMapping(value = "/findproduct", method = RequestMethod.POST)
+	public String processProductSearch(@ModelAttribute("p") Product pform,
+			Map<String, Object> model, Model model2) {
+
+		model2.addAttribute("product", new Product());
+
+		try {
+			model2.addAttribute("listProducts",
+					this.productService.getProductByName(pform.getName()));
+
+		} catch (ProductsNotFoundException e) {
+			model2.addAttribute("errorMessage", "No products!");
+
+		}
+		return "product";
+	}
+
 	// Showing content of the cart
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String listProductsCart(Model model) {
@@ -87,45 +114,24 @@ public class ProductController {
 		model.addAttribute("cart", this.cart.getProductList());
 		return "cart";
 	}
-/*
-	 Adding product to cart
-	@RequestMapping(value = "/addtocart/{id}/addtocart2/{name}/addtocart3/{price}", method = RequestMethod.GET)
-	public String addToCart(@PathVariable final int id,
-			@PathVariable final String name, @PathVariable final double price) {
-		
+
+	@RequestMapping(value = "/addtoCart", method = RequestMethod.POST)
+	public String processaddingcart(@ModelAttribute("product") Product p,
+			ModelMap model) {
 		CartItem ci = new CartItem();
-		ci.setId(id);
-		ci.setName(name);
-		ci.setPrice(price);
+		ci.setId(p.getId());
+		ci.setName(p.getName());
+		ci.setPrice(p.getPrice());
+		ci.setPcs(p.getPcs());
 		this.cart.addProduct(ci);
+
+		System.out.println("#####################" + p.getPcs());
+		System.out.println("#####################" + p.getName());
+
 		return "redirect:/cart";
 
 	}
 
-	*/
-	
-	
-	
-	
-	@RequestMapping(value = "/addtocart", method = RequestMethod.GET)
-	public String viewRegistrationForm(Map<String, Object> model) {
-		Product userForm = new Product();
-		model.put("userForm", userForm);
-
-		return "product";
-	}
-
-	
-	
-	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
-	public String processRegistration(@ModelAttribute("userForm") Product p,
-			Map<String, Object> model) {
-		
-		return "cart";
-	
-	}
-	
-	
 	// Removing product from the DB.
 	@RequestMapping("/remove/{id}")
 	public String removeProduct(@PathVariable("id") int id) {
@@ -150,7 +156,7 @@ public class ProductController {
 		return "admin";
 	}
 
-	@RequestMapping(value = "/products/getTags", method = RequestMethod.GET)
+	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Tag> getTags(@RequestParam String tagName) {
 

@@ -13,16 +13,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.NotEmpty;
+
+
 @Entity
 @Table(name = "users")
 public class User {
-
+	@NotEmpty (message = "Please enter your username.")
 	private String username;
+	
+	@Size(min=6, max=12, message = "Your password must between 6 and 15 characters")
 	private String password;
+	
+	@NotEmpty(message = "Please enter your firstname.")
 	private String firstname;
+	@NotEmpty(message = "Please enter your lastname.")
 	private String lastname;
-	private String address;
+	@NotEmpty(message = "Please enter your addresss.")
+	private String address;		
+	@Size(min=5, max=5,message="Must be five number")
+	@Range(min=0,max=9,message="No chars")
 	private String zipcode;
+	@NotEmpty(message = "Please enter your town.")
 	private String town;
 	private boolean enabled;
 

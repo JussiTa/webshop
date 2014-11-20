@@ -26,7 +26,7 @@ public class Product {
 	
 	
 	public Product(String name,String category, double price){
-		this.name = name;
+		this.productname = name;
 		this.category = category;
 		this.price = price;		
 	}
@@ -51,7 +51,7 @@ public class Product {
 	
 	
 	@Column (name= "productname", nullable =false,length = 10)
-	private String name;
+	private String productname;
 	
 	
 	@Column (name= "category", nullable =false,length = 10)
@@ -72,11 +72,11 @@ public class Product {
 	}
 
 	public String getName() {
-		return name;
+		return productname;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.productname = name;
 	}
 
 	public double getPrice() {
@@ -89,7 +89,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", name=" + name + ", price=" + price;
+		return "id=" + id + ", name=" + productname + ", price=" + price;
 	}
 
 
