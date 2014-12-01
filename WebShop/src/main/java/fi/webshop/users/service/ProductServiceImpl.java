@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	//@Transactional
-	public List<Product> listProducts()  {
+	public List<Product> listProducts() throws ProductsNotFoundException  {
 		List<Product> list = null;
 	
 		list= this.productDao.listProducts();

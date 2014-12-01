@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class OrderItem implements Comparable<OrderItem>{
 
 	private Long itemid;
-	private String order_name;
+	private String item_name;
 	private int pcs;
 	private double price;
 	private double itemprice;
@@ -21,17 +21,17 @@ public class OrderItem implements Comparable<OrderItem>{
 	}
 	
 	public OrderItem(String name, int pcs, double price){
-		this.order_name =name;
+		this.item_name =name;
 		this.pcs = pcs;
 		this.itemprice =price;
-		this.price= pcs*this.price;
+		this.price= this.pcs*this.itemprice;
 		
 		
 	}
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "item_id")
+	@Column(name = "item_id", unique = true, nullable = false)
 	public Long getId() {
 		return this.itemid;
 	}
@@ -41,13 +41,13 @@ public class OrderItem implements Comparable<OrderItem>{
 		this.itemid = id;
 	}
 
-	@Column(name = "order_name")
+	@Column(name = "item_name")
 	public String getProductname() {
-		return order_name;
+		return item_name;
 	}
 
 	public void setProductname(String productname) {
-		this.order_name = productname;
+		this.item_name = productname;
 	}
 
 	@Column(name = "pcs")
@@ -79,8 +79,8 @@ public class OrderItem implements Comparable<OrderItem>{
 	@Override
 	public int compareTo(OrderItem o) {		
 		int number = 0;
-		if(o.itemid!=null)
-		number = this.itemid.compareTo(o.itemid);
+		if(o.item_name!=null)
+		number = this.item_name.compareTo(o.item_name);
 		
 		return number;
 				

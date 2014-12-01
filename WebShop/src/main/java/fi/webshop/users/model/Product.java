@@ -99,6 +99,6 @@ public class Product {
 
 
 	public void setPcs(int pcs) {
-		this.pcs+=pcs;
+		this.pcs=pcs;
 	}
 }

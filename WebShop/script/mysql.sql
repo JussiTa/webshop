@@ -29,16 +29,16 @@ CREATE TABLE user_roles (
   
   create table orders (
    order_id INT NOT NULL auto_increment,
-   order_name VARCHAR(30) default NULL,
-   user_id INT default NULL,
-   order_date datetime,
-   PRIMARY KEY (id)
-);
+   order_name VARCHAR(30) not null,
+   username VARCHAR (30)not null,
+   order_date timestamp,
+   total double(5,2) not null,
+   PRIMARY KEY (order_id));
 
 
  create table order_items (
    item_id INT NOT NULL auto_increment,
-   order_name VARCHAR(30) default NULL,
+   item_name VARCHAR(30) default NULL,
    order_id INT default NULL,
    itemprice double,
    price double,
@@ -59,4 +59,4 @@ VALUES ('user', 'ROLE_USER');
 
 
 INSERT INTO products (productname, gategory, price)
-VALUES ('vehn�', 'viljat', 0.89);
+VALUES ('vehna', 'viljat', 0.89);

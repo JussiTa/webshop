@@ -4,15 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Order success</title>
 </head>
 <body>
 
 <h1>Thank you, you have successfull finish your order!</h1>
 
 
-
-
+    <a href="http://localhost:8080/Webshop/">Home</a>
+    
 
 </body>
 </html>

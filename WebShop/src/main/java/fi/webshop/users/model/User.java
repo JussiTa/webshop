@@ -33,8 +33,7 @@ public class User {
 	private String lastname;
 	@NotEmpty(message = "Please enter your addresss.")
 	private String address;		
-	@Size(min=5, max=5,message="Must be five number")
-	@Range(min=0,max=9,message="No chars")
+	@Size(min=5, max=5,message="Must be five number")	
 	private String zipcode;
 	@NotEmpty(message = "Please enter your town.")
 	private String town;
@@ -109,7 +108,7 @@ public class User {
 	/*
 	 * Setting up relations between user and it's roles (one to many)
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 
 	public void setUserRole(Set<UserRole> userRole) {
@@ -161,7 +160,7 @@ public class User {
 
 	}
 
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Set<Order> orders = new HashSet<Order>();
 
@@ -176,7 +175,6 @@ public class User {
 	}
 
 	public void addOrder(Order o) {
-
 		this.orders.add(o);
 
 	}

@@ -27,9 +27,7 @@ public class Cart {
 
 	public void addProduct(CartItem ci) {
 		if (!id.containsKey(ci.getId())) {
-			// ci.setPcs(1);
 			id.put(ci.getId(), ci);
-
 			productList.add(ci);
 		} else {
 			CartItem ci2 = (CartItem) id.get(ci.getId());
@@ -45,11 +43,11 @@ public class Cart {
 		return this.productList;
 	}
 
-	public void removeProduct(CartItem ci) {
+	public void removeProduct(int id) {
 		for (ListIterator<CartItem> iter = productList.listIterator(); iter
 				.hasNext();) {
 			CartItem ci2 = iter.next();
-			if (ci2.getId() == ci.getId())
+			if (ci2.getId().equals(id))
 				iter.remove();
 		}
 	}
@@ -62,6 +60,34 @@ public class Cart {
 
 	public List<CartItem> getItems() {
 		return this.productList;
+
+	}
+
+	public void empty() {
+		this.productList.clear();
+
+	}
+
+	public void editPcs(String id, int pcs) {
+		for (ListIterator<CartItem> iter = productList.listIterator(); iter
+				.hasNext();) {
+			CartItem ci2 = iter.next();
+			if (ci2.getId().equals(id))
+				total -= ci2.editPcs(pcs);
+		}
+	}
+
+	public CartItem getItem(int id) {
+
+		for (ListIterator<CartItem> iter = productList.listIterator(); iter
+				.hasNext();) {
+			CartItem ci2 = iter.next();
+			if (ci2.getId().equals(Integer.toString(id)))
+				return ci2;
+
+		}
+
+		return null;
 
 	}
 

@@ -34,6 +34,7 @@
 			<li><a href="http://localhost:8080/Webshop/register">Register
 			</a></li>
 			<li><a href="http://localhost:8080/Webshop/about">About </a></li>
+			<li><a href="http://localhost:8080/Webshop/myPage">My page </a></li>
 
 		</ul>
 	</div>

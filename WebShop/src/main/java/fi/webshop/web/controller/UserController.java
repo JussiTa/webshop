@@ -25,9 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import fi.webshop.users.dao.ProductsNotFoundException;
+import fi.webshop.users.dao.UsernameReservedException;
+import fi.webshop.users.model.Order;
 import fi.webshop.users.model.Product;
 import fi.webshop.users.model.User;
 import fi.webshop.users.model.UserRole;
+import fi.webshop.users.service.OrderService;
 import fi.webshop.users.service.ProductService;
 import fi.webshop.users.service.UserService;
 
@@ -40,7 +43,6 @@ public class UserController {
 	@Autowired
 	private ProductService productService;
 
-	
 	public void setUserService(UserService us) {
 		this.userService = us;
 
@@ -124,7 +126,7 @@ public class UserController {
 		} else if (exception instanceof LockedException) {
 			error = exception.getMessage();
 		} else {
-			error = "Invalid username and password!";
+			error = "Your account has been locked!";
 		}
 
 		return error;
@@ -161,10 +163,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration( @Valid @ModelAttribute ("userForm") User userForm,
-			BindingResult br, Map<String, Object>model) {
-		
-		if(br.hasErrors())
+	public String processRegistration(
+			@Valid @ModelAttribute("userForm") User userForm, BindingResult br,
+			Map<String, Object> model, Model model2) {
+
+		if (br.hasErrors())
 			return "registration";
 
 		ur = new UserRole(userForm, "ROLE_USER");
@@ -172,20 +175,22 @@ public class UserController {
 		userForm.addRole(ur);
 		userForm.setEnabled(true);
 
-		userService.addNewUser(userForm);
+		try {
+			userService.addNewUser(userForm);
+		} catch (UsernameReservedException e) {
+			model2.addAttribute("errorMessage", e.getMessage());
+			e.printStackTrace();
+			return "registration";
+		}
 		return "registrationSuccess";
 	}
-	
-	
-	
-	
-	
-	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String processUserEdits(@ModelAttribute("editform")User user,
-			Map<String,Object> model){
-		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String processUserEdits(@ModelAttribute("editform") User user,
+			Map<String, Object> model) {
+
 		userService.updateUser(user);
-		
+
 		return "";
 	}
 }

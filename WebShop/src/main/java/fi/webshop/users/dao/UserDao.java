@@ -13,7 +13,7 @@ public interface UserDao {
 
 	public User findByUserName(String username);
 
-	public void addNewUser(User u);
+	public void addNewUser(User u) throws UsernameReservedException;
 
 	public void updateUser(Order o,String username);
 

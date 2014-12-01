@@ -29,78 +29,77 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private ProductService productService;
-	
 	private Cart cart;
-	private String username;	
+	private String username;
 	private OrderItem oi;
-	private CartItem ci;	
-	
-	
+	private CartItem ci;
+	@Autowired
+	private OrderService orderservice;
 
-	
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
-	public String checkout(Model model,HttpServletRequest request, HttpSession session) {
-		 cart = (Cart)
-				  session.getAttribute("cart");
-		model.addAttribute("cartItem",new CartItem());
-		model.addAttribute("cart",cart.getProductList());	
-		
-		cart =productService.updateProductAmount(cart);
-		
-		/*for(ListIterator<CartItem> iterator = cart.getProductList().listIterator();
-				iterator.hasNext();){			
-			ci=iterator.next();			
-			if(!ci.isSufficient())
-				model.addAttribute(attributeName, attributeValue)
-		}		*/
-		
-	
-	return "checkout";
-	
-	
+	public String checkout(Model model, HttpServletRequest request,
+			HttpSession session) {
+		cart = (Cart) session.getAttribute("cart");
+		model.addAttribute("cartItem", new CartItem());
+		model.addAttribute("cart", cart.getProductList());
+
+		cart = productService.updateProductAmount(cart);
+
+		return "checkout";
+
 	}
+
 	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
-	public String confirm(Model model,HttpServletRequest request, HttpSession session) {
-		
-		 cart = (Cart)
-				  session.getAttribute("cart");		
-		
+	public String confirm(Model model, HttpServletRequest request,
+			HttpSession session) {
+
+		cart = (Cart) session.getAttribute("cart");
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		
-		username= userDetail.getUsername();		
+
+		username = userDetail.getUsername();
 		
 		User user = userService.getUserByUsername(username);
 		Order order = new Order();
-		order.setOrder_name(user.getLastname());		
-		
-		
-		for(ListIterator<CartItem> iterator = cart.getProductList().listIterator();
-				iterator.hasNext();){			
-			ci=iterator.next();			
-			oi =new OrderItem(ci.getName(),ci.getPcs(),ci.getPrice());			
-			order.addrderItem(oi);			
-		}		
-		
-		
-		//user.addOrder(order);
-		userService.updateUser(order, user.getUsername());		
-		
+		order.setOrder_name(user.getLastname());
+        order.setUsername(username);
+		for (ListIterator<CartItem> iterator = cart.getProductList()
+				.listIterator(); iterator.hasNext();) {
+			ci = iterator.next();
+			oi = new OrderItem(ci.getName(), ci.getPcs(), ci.getPrice());			
+			System.out.println("#########USERNAME############" + username);
+			order.addOrderItem(oi);
+
+		}
+
+		// user.addOrder(order);
+		userService.updateUser(order, user.getUsername());
+
 		model.addAttribute("orderlist", cart.getProductList());
-        
+
+		cart.empty();
+
 		return "orderDone";
 
 	}
-	
-	
-	
-	
+
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public String getUser(Model model) {
+        model.addAttribute("order", new Order());
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		model.addAttribute("orderlist",
+				orderservice.getOrderByUsername(userDetail.getUsername()));
+
+		return "myPage";
+
+	}
 
 }

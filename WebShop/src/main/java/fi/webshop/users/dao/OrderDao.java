@@ -13,4 +13,6 @@ public interface OrderDao {
 
 	public void addOrderItem(OrderItem oa);
 
+	public List<Order> getOrdersByUsername(String username);
+
 }

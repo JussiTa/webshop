@@ -7,6 +7,7 @@ package fi.webshop.users.service;
 
 
 import fi.webshop.users.dao.UserDao;
+import fi.webshop.users.dao.UsernameReservedException;
 import fi.webshop.users.model.Order;
 import fi.webshop.users.model.User;
 
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override	
-	public void addNewUser(User u) {
+	public void addNewUser(User u) throws UsernameReservedException {
 		userDao.addNewUser(u);
 
 	}

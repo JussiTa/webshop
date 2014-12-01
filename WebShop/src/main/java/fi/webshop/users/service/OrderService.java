@@ -13,11 +13,14 @@ public interface OrderService {
 
 	List<OrderItem> listOrderItems(int order_id);
 
-	void addOrderItem(OrderItem oa);
+	public void addOrderItem(OrderItem oa);
 
 	public Order getOrderById(int id);
 	
+	public List<Order> getOrderByUsername(String username);
+	
 	public void addOrder(Order o, User u);
+	
 
 }
 	

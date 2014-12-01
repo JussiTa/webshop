@@ -43,7 +43,6 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	private Cart cart = new Cart();
-	
 
 	public void setProductService(ProductService ps) {
 		this.productService = ps;
@@ -75,7 +74,7 @@ public class ProductController {
 					this.productService.listProducts());
 
 		} catch (ProductsNotFoundException e) {
-			model.addAttribute("errorMessage", "No products!");
+			model.addAttribute("errorMessage", e);
 
 		}
 		return "product";
@@ -96,14 +95,8 @@ public class ProductController {
 
 		model2.addAttribute("product", new Product());
 
-		try {
-			model2.addAttribute("listProducts",
-					this.productService.getProductByName(pform.getName()));
-
-		} catch (ProductsNotFoundException e) {
-			model2.addAttribute("errorMessage", "No products!");
-
-		}
+		model2.addAttribute("listProducts",
+				this.productService.getProductByName(pform.getName()));
 		return "product";
 	}
 
@@ -124,10 +117,6 @@ public class ProductController {
 		ci.setPrice(p.getPrice());
 		ci.setPcs(p.getPcs());
 		this.cart.addProduct(ci);
-
-		System.out.println("#####################" + p.getPcs());
-		System.out.println("#####################" + p.getName());
-
 		return "redirect:/cart";
 
 	}
@@ -138,6 +127,14 @@ public class ProductController {
 
 		this.productService.removeProduct(id);
 		return "admin";
+	}
+
+	// Removing product from the cart.
+	@RequestMapping("/removeItem/{id}")
+	public String removeProductfromCart(@PathVariable("id") int id) {
+
+		cart.empty();
+		return "cart";
 	}
 
 	// Edit product in DB.
@@ -177,5 +174,44 @@ public class ProductController {
 	public Cart getCart() {
 		return this.cart;
 	}
+
+	@RequestMapping(value = "/editCart/{id}", method = RequestMethod.GET)
+	public String processEditcart(@PathVariable("id") int id, Model model) {
+		List<CartItem> productList = new ArrayList<CartItem>();
+		productList.add(this.cart.getItem(id));
+		model.addAttribute("cart", productList);
+
+		return "editcart";
+
+	}
+
+	@RequestMapping(value = "/saveEditCart", method = RequestMethod.POST)
+	public String processSaveEditcart(@ModelAttribute("product") CartItem ci,
+			ModelMap model) {
+
+		this.cart.editPcs(ci.getId(), ci.getPcs());
+
+		return "redirect:/cart";
+
+	}
+	
+	
+	@RequestMapping (value="/addOredit",method =RequestMethod.POST)
+	public String processEditForm(@ModelAttribute Product p){		
+		productService.updateProduct(p);		
+		return "redirect:/admin";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -15,8 +15,6 @@
 	<div id="header">
 
 		<h1>${title}</h1>
-		<%-- <h1>Message : ${message}</h1>
- --%>
 
 		<a href="javascript:formSubmit()"> Logout</a>
 	</div>
@@ -25,7 +23,7 @@
     Add a Product
 </h1>
  
-<c:url var="addAction" value="/add" ></c:url>
+<c:url var="addAction" value="/addOredit" ></c:url>
  
 <form:form action="${addAction}" commandName="product">
 <table>
@@ -54,12 +52,12 @@
     </tr>
     <tr>
         <td>
-            <form:label path="gategory">
-                <spring:message text="Gategory"/>
+            <form:label path="category">
+                <spring:message text="Category"/>
             </form:label>
         </td>
         <td>
-            <form:input path="gategory" />
+            <form:input path="category" />
         </td>
     </tr>
     
@@ -120,7 +118,7 @@
 					<tr>
 						<td>${product.id}</td>
 						<td>${product.name}</td>
-						<td>${product.gategory}</td>
+						<td>${product.category}</td>
 						<td>${product.price}</td>
 						<td><a href="<c:url value='/edit/${product.id}' />" >Edit</a></td>
          				   <td><a href="<c:url value='/remove/${product.id}' />" >Delete</a></td>

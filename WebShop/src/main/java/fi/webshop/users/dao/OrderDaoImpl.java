@@ -35,7 +35,7 @@ public class OrderDaoImpl implements OrderDao {
 	public List<OrderItem> listOrderItems(int order_id) {
 		Session session = sessionFactory.getCurrentSession();
 		List<OrderItem> orders;
-		orders= (List<OrderItem>) session.createQuery("from orderitem where order_id=?").
+		orders= (List<OrderItem>) session.createQuery("from orderitem where id=?").
 				setParameter(0, order_id).list();
 		
 		return orders;
@@ -45,6 +45,16 @@ public class OrderDaoImpl implements OrderDao {
 	public void addOrderItem(OrderItem oa) {
 	 
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getOrdersByUsername(String username) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Order> orders;
+		orders= (List<Order>) session.createQuery("from Order where username=?").
+				setParameter(0, username).list();
+		return orders;
 	}
 
 	

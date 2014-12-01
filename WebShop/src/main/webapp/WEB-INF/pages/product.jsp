@@ -60,29 +60,42 @@
 		</form:form>
 
 		<script>
-  $(document).ready(function() {
- 
-	$('#product-search').autocomplete({
-		serviceUrl: '${pageContext.request.contextPath}/getTags',
-		paramName: "tagName",
-		delimiter: ",",
-	   transformResult: function(response) {
- 
-		return {      	
-		  //must convert json to javascript object before process
-		  suggestions: $.map($.parseJSON(response), function(item) {
- 
-		      return { value: item.tagName, data: item.id };
-		   })
- 
-		 };
- 
-            }
- 
-	 });
- 
-  });
-  </script>
+			$(document)
+					.ready(
+							function() {
+
+								$('#product-search')
+										.autocomplete(
+												{
+													serviceUrl : '${pageContext.request.contextPath}/getTags',
+													paramName : "tagName",
+													delimiter : ",",
+													transformResult : function(
+															response) {
+
+														return {
+															//must convert json to javascript object before process
+															suggestions : $
+																	.map(
+																			$
+																					.parseJSON(response),
+																			function(
+																					item) {
+
+																				return {
+																					value : item.tagName,
+																					data : item.id
+																				};
+																			})
+
+														};
+
+													}
+
+												});
+
+							});
+		</script>
 		<br>
 		<h3>Product List</h3>
 		<c:if test="${!empty listProducts}">
@@ -92,7 +105,7 @@
 					<th width="120">Product Name</th>
 					<th width="120">Product Gategory</th>
 					<th width="120">Product price</th>
-					<th width="120">add to cart</th>
+					<th width="120">Add to cart</th>
 				</tr>
 
 				<c:forEach items="${listProducts}" var="product">
@@ -111,7 +124,7 @@
 							<td>${product.price}<input type="hidden" name="price"
 								value="${product.price}">
 							</td>
-							<td><input type="text" name="pcs"></td>
+							<td><input type="text" name="pcs" size='5' value='1'></td>
 							<td><input type="submit" value="Add to cart" /></td>
 						</tr>
 					</form:form>
