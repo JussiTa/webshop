@@ -64,9 +64,15 @@
 		</table>
 	</c:if>
 
+<c:url var="addAction" value="/paypal" ></c:url>
+ 
+
+<form action="${addAction}">
+<input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'   alt='Check out with PayPal'/>
+</form>
 
 
-	<a href="http://localhost:8080/Webshop/confirm">Confirm order</a>
+	<!-- <a href="http://localhost:8080/Webshop/confirm">Confirm order</a> -->
 	<a href="http://localhost:8080/Webshop/product">Continue shopping</a>
 
 </body>

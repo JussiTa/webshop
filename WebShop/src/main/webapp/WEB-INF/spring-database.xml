@@ -60,8 +60,7 @@
 	<bean id="orderService" class="fi.webshop.users.service.OrderServiceImpl">
 		<property name="orderDao" ref="orderDao" />
 	</bean>	 
-	
-	
+
 	
 	
 	

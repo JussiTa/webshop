@@ -38,6 +38,8 @@
 		<dbcp.version>1.4</dbcp.version>
 		<servletapi.version>2.5</servletapi.version>
 		<jackson.version>1.9.10</jackson.version>
+		<org.springframework.social.paypal-version>1.0.11.RELEASE</org.springframework.social.paypal-version>
+		<org.springframework-version>3.2.2.RELEASE</org.springframework-version>
 	</properties>
 
 	<dependencies>
@@ -55,20 +57,40 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
-		
-		<!-- Hibernate validation -->
+
+		<!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>merchantsdk</artifactId>
+			<version>LATEST</version>
+		</dependency>
 		
 		<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-validator</artifactId>
-	<version>5.1.1.Final</version>
+    <groupId>com.paypal.sdk</groupId>
+    <artifactId>rest-api-sdk</artifactId>
+    <version>LATEST</version>
 </dependency>
-		
-		
-		
-		
-		
+
+
+		<!-- Hibernate validation -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.1.Final</version>
+		</dependency>
+
+
+
+
+
 
 		<!-- Spring 3 dependencies -->
 		<dependency>
@@ -225,11 +247,8 @@
 
 		<!-- Broadleaf for bank channel -->
 
-		<!-- <dependency>
-			<groupId>org.broadleafcommerce</groupId>
-			<artifactId>broadleaf-common</artifactId>
-			<version>3.1.8-GA</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.broadleafcommerce</groupId> <artifactId>broadleaf-common</artifactId> 
+			<version>3.1.8-GA</version> </dependency> -->
 
 	</dependencies>
 

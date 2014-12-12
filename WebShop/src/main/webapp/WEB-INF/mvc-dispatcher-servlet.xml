@@ -17,7 +17,15 @@
 		</property>
 		<property name="suffix">
 			<value>.jsp</value>
-		</property>
+			
+			</property>
+		
+			
+			
+		
+		
+		
+		
 	</bean>
 <!-- This for using for example css files -->
 	<mvc:resources mapping="/resources/**" location="/resources/css" />

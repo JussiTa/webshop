@@ -1,30 +1,29 @@
 package fi.webshop.web.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import fi.webshop.users.dao.ProductsNotFoundException;
 import fi.webshop.users.model.Product;
-import fi.webshop.users.model.User;
-import fi.webshop.users.model.UserRole;
+import fi.webshop.users.resources.MyResource;
 import fi.webshop.users.service.ProductService;
 import fi.webshop.web.view.Cart;
 import fi.webshop.web.view.CartItem;
@@ -51,14 +50,33 @@ public class ProductController {
 
 	List<Tag> data = new ArrayList<Tag>();
 
-	ProductController() {
-		// init data for testing
-		data.add(new Tag(1, "ryepowder"));
-		data.add(new Tag(2, "wheatpowder"));
-		data.add(new Tag(3, "rolledwheat"));
-		data.add(new Tag(4, "oatmeal"));
-		data.add(new Tag(5, "oatpowder"));
-		data.add(new Tag(6, "crushed wheat"));
+	ProductController() throws IOException {
+
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+				new String[] { "TextFileResources.xml" });
+
+		MyResource rs = (MyResource) ctx.getBean("resource");
+
+		Resource resource = rs
+				.getResource("classpath:fi/webshop/resources/products.txt");
+
+		InputStream is = resource.getInputStream();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		try {
+			String line = br.readLine();
+			int i = 0;
+			while (line != null) {
+				data.add(new Tag(i, line));
+				line = br.readLine();
+				i++;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		} finally {
+			br.close();
+		}
 
 	}
 
@@ -156,7 +174,6 @@ public class ProductController {
 	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Tag> getTags(@RequestParam String tagName) {
-
 		return simulateSearchResult(tagName);
 
 	}
@@ -194,24 +211,13 @@ public class ProductController {
 		return "redirect:/cart";
 
 	}
-	
-	
-	@RequestMapping (value="/addOredit",method =RequestMethod.POST)
-	public String processEditForm(@ModelAttribute Product p){		
-		productService.updateProduct(p);		
+
+	@RequestMapping(value = "/addOredit", method = RequestMethod.POST)
+	public String processEditForm(@ModelAttribute Product p) {
+		productService.updateProduct(p);
+
 		return "redirect:/admin";
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -1,58 +1,58 @@
- .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
-.autocomplete-suggestion { padding: 5px 5px; white-space: nowrap; overflow: hidden; font-size:22px}
-.autocomplete-selected { background: #F0F0F0; }
-.autocomplete-suggestions strong { font-weight: bold; color: #3399FF; }
- 
+.autocomplete-suggestions {
+	border: 1px solid #999;
+	background: #FFF;
+	overflow: auto;
+}
 
+.autocomplete-suggestion {
+	padding: 5px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 22px
+}
+
+.autocomplete-selected {
+	background: #F0F0F0;
+}
+
+.autocomplete-suggestions strong {
+	font-weight: bold;
+	color: #3399FF;
+}
 
 #header {
-    background-color:green;
-    color:black;
-    text-align:center;
-    padding:5px;
+	background-color: green;
+	color: black;
+	text-align: center;
+	padding: 5px;
 }
-
 
 #error {
-        color: red; font-weight: bold;
-    }
+	color: red;
+	font-weight: bold;
+}
 
 #section {
-   
-    float:left;
-    padding:10px;
-   	 
+	float: left;
+	padding: 10px;
 }
-
 
 #footer {
-    background-color:blue;
-    color:black;
-    clear:both;   
-   padding:5px;	 	 
+	background-color: blue;
+	color: black;
+	clear: both;
+	padding: 5px;
 }
-
-
 
 #link {
-    text-align:right;
-    color:black;	 	 
+	text-align: right;
+	color: black;
 }
-
 
 #linkleft {
-    text-align:left;
-    color:black;	 	 
+	text-align: left;
+	color: black;
 }
-
-
-#cart {
-    image-align:left;    
-    height:30px;
-    width:30px;
-    	 	 
-}
-
 
 ul {
 	list-style-type: none;
@@ -63,7 +63,6 @@ ul {
 p {
 	color: black;
 	/* This is a single-line comment */
-	
 	font-size: 16px;
 }
 
@@ -109,14 +108,13 @@ table.tg .tg-4eph {
 }
 
 #nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:100px;
-    float:left;
-    padding:5px;	      
+	line-height: 30px;
+	background-color: #eeeeee;
+	height: 300px;
+	width: 100px;
+	float: left;
+	padding: 5px;
 }
-
 
 .tg {
 	border-collapse: collapse;
@@ -154,6 +152,3 @@ table.tg .tg-4eph {
 .tg .tg-4eph {
 	background-color: #f9f9f9
 }
-
-
-

@@ -13,7 +13,7 @@
 
 <link href="${pageContext.request.contextPath}/resources/css/main.css"
 	rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8">
+<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
 <title>Products Page</title>
 
 </head>
@@ -23,9 +23,11 @@
 		<div id="link">
 			<a href="http://localhost:8080/Webshop/login">Login</a>
 		</div>
-
 		<div id="cart">
-			<a href="cart"><img src="webapp/resources/images/shopingcart.svg"></a>
+
+			<a href="cart"> <img
+				src="http://www.clker.com/cliparts/5/b/5/0/11949857881524867289hotel_icon_grocery_stor_01.svg.thumb.png"
+				width="35" height="35" align="middle"></a>
 		</div>
 
 	</div>
@@ -63,7 +65,6 @@
 			$(document)
 					.ready(
 							function() {
-
 								$('#product-search')
 										.autocomplete(
 												{
@@ -72,7 +73,6 @@
 													delimiter : ",",
 													transformResult : function(
 															response) {
-
 														return {
 															//must convert json to javascript object before process
 															suggestions : $
@@ -81,17 +81,13 @@
 																					.parseJSON(response),
 																			function(
 																					item) {
-
 																				return {
 																					value : item.tagName,
 																					data : item.id
 																				};
 																			})
-
 														};
-
 													}
-
 												});
 
 							});

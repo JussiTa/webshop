@@ -90,5 +90,12 @@ public class Cart {
 		return null;
 
 	}
+	
+	@Override
+	public String toString(){
+		return ""+this.total;
+		
+		
+	}
 
 }

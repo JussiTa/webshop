@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,6 +25,7 @@ import fi.webshop.users.service.UserService;
 import fi.webshop.web.view.Cart;
 import fi.webshop.web.view.CartItem;
 
+
 @Controller
 public class OrderController {
 
@@ -34,9 +36,7 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 	private Cart cart;
-	private String username;
-	private OrderItem oi;
-	private CartItem ci;
+	
 	@Autowired
 	private OrderService orderservice;
 
@@ -52,8 +52,12 @@ public class OrderController {
 		return "checkout";
 
 	}
+	
+	
+	
+	
 
-	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
 	public String confirm(Model model, HttpServletRequest request,
 			HttpSession session) {
 
@@ -87,7 +91,7 @@ public class OrderController {
 
 		return "orderDone";
 
-	}
+	}*/
 
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String getUser(Model model) {
