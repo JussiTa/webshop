@@ -10,6 +10,35 @@
 
 <h1>Thank you, you have successfull finish your order!</h1>
 
+		
+	 <table class="tg" id="tblData">
+			<tr>
+				<th width="120">Name</th>
+				<th width="180">Address</th>
+				<th width="120">Total</th>
+				
+				
+				
+
+			</tr>
+			<tr>
+			
+					<td>${name}</td>
+					<td>${address}</td>
+					<td>${total}</td>
+
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
 
     <a href="http://localhost:8080/Webshop/">Home</a>
     

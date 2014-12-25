@@ -7,6 +7,7 @@ CREATE  TABLE users (
   address VARCHAR (20) NOT NULL,
   zipcode int (5) NOT NULL,
   town VARCHAR (20)NOT NULL,  
+  email VARCHAR(60) NOT NULL,
   enabled TINYINT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (user_id));
 
@@ -45,18 +46,40 @@ CREATE TABLE user_roles (
    pcs INT,
    PRIMARY KEY (item_id)
 );  
+
+
+create table billing (
+   billing_id INT NOT NULL auto_increment,
+   billing_name VARCHAR(30) not null,
+   order_id VARCHAR (30)not null,
+   expired_date timestamp,
+   total double(5,2) not null,
+   PRIMARY KEY (order_id));
+   
+create table billing_items (
+   item_id INT NOT NULL auto_increment,
+   item_name VARCHAR(30) default NULL,
+   billing_id INT default NULL,
+   itemprice double,
+   price double,
+   pcs INT,
+   PRIMARY KEY (item_id)
+);  
+   
+   
+   
+   
+   
+   
+   
+   
+
+
+
+
+
+
+
+
   
 
-INSERT INTO users(id, username,password,enabled)
-VALUES ('admin','$2a$10$eYg/Ke78z6gv9JFwLbSb7u9lk3u20MsCh8NgkNN215LXHDUIluYWS', true);
-
-INSERT INTO user_roles (username, role)
-VALUES ('admin', 'ROLE_USER');
-INSERT INTO user_roles (username, role)
-VALUES ('admin', 'ROLE_ADMIN');
-INSERT INTO user_roles (username, role)
-VALUES ('user', 'ROLE_USER');
-
-
-INSERT INTO products (productname, gategory, price)
-VALUES ('vehna', 'viljat', 0.89);

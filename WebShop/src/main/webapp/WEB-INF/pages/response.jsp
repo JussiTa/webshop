@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,39 +33,42 @@
 </script>
 </head>
 <body onload="stringify();">
-	
+
 	<br />
 	<%
 		if (request.getAttribute("redirectURL") != null) {
 	%>
 	<a href=<%=(String) request.getAttribute("redirectURL")%>>Continue
-		</a>
+	</a>
 	<br />
 	<%
 		}
 	%>
-	
-	
+
+
 	<h2>
-			<c:out value="${cancel}" />
-		</h2>
-	
-	
-	 <table  class="tg"id="tblData">
+		<c:out value="${cancel}" />
+	</h2>
+
+
+	<table class="tg" id="tblData">
 		<tr>
-		<!-- 	<th>Request</th> -->
-			<!-- <th>Response</th> -->
+			<th width="50">Cart</th>
+			<th width="50">Shipping</th>
+			<th width="50">Total</th>
+
+
 		</tr>
 		<tr>
-			<!-- <td valign="top"><pre id="request"> -->
-					
-		<!-- 	</pre></td> -->
-			<td  id="response"> </td>
-					
-				<!-- </pre></td> -->
+			<td>${cart}</td>
+			<td>${shipping}</td>
+			<td><fmt:formatNumber type="number" minFractionDigits="2"
+						value="${total}" /></td>
 		</tr>
-	</table> 
-	<br />
+
+	</table>
+
+
 	<a href="http://localhost:8080/Webshop/checkout">Back</a>
 </body>
 </html>

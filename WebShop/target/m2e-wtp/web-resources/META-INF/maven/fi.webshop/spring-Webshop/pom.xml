@@ -28,7 +28,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.7</jdk.version>
-		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.version>4.1.1.RELEASE</spring.version>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 		<jstl.version>1.2</jstl.version>
 		<mysql.connector.version>5.1.30</mysql.connector.version>
@@ -39,7 +39,7 @@
 		<servletapi.version>2.5</servletapi.version>
 		<jackson.version>1.9.10</jackson.version>
 		<org.springframework.social.paypal-version>1.0.11.RELEASE</org.springframework.social.paypal-version>
-		<org.springframework-version>3.2.2.RELEASE</org.springframework-version>
+		<org.springframework-version>4.1.1.RELEASE</org.springframework-version>
 	</properties>
 
 	<dependencies>
@@ -71,12 +71,12 @@
 			<artifactId>merchantsdk</artifactId>
 			<version>LATEST</version>
 		</dependency>
-		
+
 		<dependency>
-    <groupId>com.paypal.sdk</groupId>
-    <artifactId>rest-api-sdk</artifactId>
-    <version>LATEST</version>
-</dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>LATEST</version>
+		</dependency>
 
 
 		<!-- Hibernate validation -->
@@ -88,7 +88,13 @@
 		</dependency>
 
 
+		<!-- Java mail -->
 
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
 
 
 
@@ -144,6 +150,27 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>3.2.5.RELEASE</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+
+
 
 		<!-- Spring Security JSP Taglib -->
 		<dependency>

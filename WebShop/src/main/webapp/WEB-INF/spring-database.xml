@@ -60,7 +60,15 @@
 	<bean id="orderService" class="fi.webshop.users.service.OrderServiceImpl">
 		<property name="orderDao" ref="orderDao" />
 	</bean>	 
+	
+	<!-- For email -->
 
+
+<bean id="mailSender" class="fi.webshop.email.MyMailSender">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="465" />
+        
+    </bean>
 	
 	
 	

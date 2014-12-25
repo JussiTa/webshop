@@ -174,6 +174,7 @@ public class ProductController {
 	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Tag> getTags(@RequestParam String tagName) {
+		System.out.println("BOOOOOOOOOOOOOO");
 		return simulateSearchResult(tagName);
 
 	}

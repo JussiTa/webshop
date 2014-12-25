@@ -49,48 +49,37 @@
 			<c:out value="${errorMessage}" />
 		</h2>
 
-		<c:url var="findaction" value="/findproduct"></c:url>
+		<%-- <c:url var="findaction" value="/findproduct"></c:url> --%>
 
-		<form:form action="${findaction}" commandName="product">
-
-			<form:input type="text" id="product-search" value="" path="name" />
+		<%-- <form:form action="${findaction}" commandName="product"> --%>
+<form >
+			<!-- <input type="text" id="product-search" value="" path="name" /> -->
+			<input type="text" id="product-search"  />
+			
 			<span> <!-- <button id="button-id" type="button">Search</button> -->
 				<input type="submit" value="Search" />
 
 			</span>
-
-		</form:form>
+</form>
+		<%-- </form:form> --%>
 
 		<script>
-			$(document)
-					.ready(
-							function() {
-								$('#product-search')
-										.autocomplete(
-												{
-													serviceUrl : '${pageContext.request.contextPath}/getTags',
-													paramName : "tagName",
-													delimiter : ",",
-													transformResult : function(
-															response) {
-														return {
-															//must convert json to javascript object before process
-															suggestions : $
-																	.map(
-																			$
-																					.parseJSON(response),
-																			function(
-																					item) {
-																				return {
-																					value : item.tagName,
-																					data : item.id
-																				};
-																			})
-														};
-													}
-												});
-
-							});
+			$(document).ready(function() {
+				$('#product-search').autocomplete(
+					{serviceUrl : '${pageContext.request.contextPath}/getTags',
+						 paramName : "tagName", delimiter : ",", transformResult : function(response)
+						{
+							return {
+							//must convert json to javascript object before process
+							suggestions : $.map($.parseJSON(response),function(	item) {
+								return {
+									value : item.tagName, data : item.id
+									};
+								})
+							};
+						}
+					}); 
+				});
 		</script>
 		<br>
 		<h3>Product List</h3>

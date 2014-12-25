@@ -1,5 +1,6 @@
 package fi.webshop.web.controller;
 
+import java.util.List;
 import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.webshop.users.model.Order;
 import fi.webshop.users.model.OrderItem;
@@ -24,6 +27,7 @@ import fi.webshop.users.service.ProductService;
 import fi.webshop.users.service.UserService;
 import fi.webshop.web.view.Cart;
 import fi.webshop.web.view.CartItem;
+import fi.webshop.web.view.Tag;
 
 
 @Controller
@@ -103,7 +107,18 @@ public class OrderController {
 				orderservice.getOrderByUsername(userDetail.getUsername()));
 
 		return "myPage";
-
+		
+		
 	}
+		
+		@RequestMapping(value = "/shipping", method = RequestMethod.GET)
+		public void shipping(){
+		
+			System.out.println("TOIMII");
+	
+	
+		}
+
+
 
 }

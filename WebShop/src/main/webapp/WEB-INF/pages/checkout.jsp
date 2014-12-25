@@ -5,6 +5,9 @@
 <%@page session="true"%>
 <html>
 <head>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8">
 <link href="${pageContext.request.contextPath}/resources/css/main.css"
 	rel="stylesheet">
@@ -56,24 +59,47 @@
 		</table>
 	</c:if>
 
-	<c:if test="${!empty cart}">
+	<%-- <c:if test="${!empty cart}">
 		<table>
 			<tr>
 				<td>${total}</td>
 			</tr>
 		</table>
 	</c:if>
+ --%>
 
+
+<table>
 <c:url var="addAction" value="/paypal" ></c:url>
+
+<form:form action="${addAction}">
+
+
+<tr>
+<td><input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'   alt='Check out with PayPal'/>
+</td>
+</tr>
+
+<tr>
+<td>
+<input type="radio" name="shipping" value="10.90" checked="checked" /> By airmail 2-10 work day, 10.90 EUR <br />
+</td>
+</tr>
+<tr>
+<td>
+<input type="radio" name="shipping" value="5.90" /> Freight shipping 15-30 work day, 5.90 EUR <br />
+</td>
+</tr>
+</form:form>
+
+
+</table>
  
 
-<form action="${addAction}">
-<input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'   alt='Check out with PayPal'/>
-</form>
 
 
 	<!-- <a href="http://localhost:8080/Webshop/confirm">Confirm order</a> -->
-	<a href="http://localhost:8080/Webshop/product">Continue shopping</a>
+	<a href="http://localhost:8080/Webshop/products">Continue shopping</a>
 
 </body>
 </html>

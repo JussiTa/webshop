@@ -38,6 +38,11 @@ public class User {
 	@NotEmpty(message = "Please enter your town.")
 	private String town;
 	private boolean enabled;
+	
+	@NotEmpty(message = "Please enter your e-mail.")
+	private String email;
+	
+	
 
 	public User() {
 	}
@@ -150,6 +155,18 @@ public class User {
 	public void setTown(String town) {
 		this.town = town;
 	}	
+	
+	@Column(name = "email", unique = true, nullable = false, length = 45)
+	public String getEmail() {
+		return this.email;
+	}
+	public void setEmail(String email){
+		this.email = email;
+		
+	}
+	
+	
+	
 
 	public Set<UserRole> getRoles() {
 		return this.userRole;

@@ -60,6 +60,14 @@
 					<td><form:input path="town" /> <form:errors path="town"
 							cssClass="error" /></td>
 				</tr>
+				
+				
+				
+				<tr>
+					<td>E-mail:</td>
+					<td><form:input path="email" /> <form:errors path="email"
+							cssClass="error" /></td>
+				</tr>
 				<tr>
 					<td>Username:</td>
 					<td><form:input path="username" /> <form:errors
